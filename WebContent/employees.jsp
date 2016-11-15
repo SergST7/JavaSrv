@@ -35,6 +35,7 @@
 							<td>${employ.idDep}</td>
 							<td>${employ.lastName}</td>
 							<td>${employ.firstName}</td>
+							<td>${employ.middleName}</td>
 							<td>${employ.position}</td>
 							<td>${employ.sex}</td>
 							<td>${employ.contactInfo}</td>
