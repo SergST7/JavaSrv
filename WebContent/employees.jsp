@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-xs-6 col-md-12">
 				<table class="table table-hover">
-					<tr>
+					<tr class="col-md-12">
 						<th>Employee_id</th>
 						<th>Dep_id</th>
 						<th>L.name<th>
@@ -30,7 +30,7 @@
 						<th>Contact Info<th>
 					</tr>
 					<c:forEach var="employ" items="${requestScope.employee}">
-						<tr>
+						<tr class="col-md-12">
 							<td>${employ.idEmpl}</td>
 							<td>${employ.idDep}</td>
 							<td>${employ.lastName}</td>
