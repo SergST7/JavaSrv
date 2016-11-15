@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Available Courses</title>
+<title>Employee list</title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.js"></script>
@@ -15,16 +15,16 @@
 
 		<div class="row">
 			<div class="col-xs-6 col-md-12">
-				<h3>Subscribed courses</h3>
+				<h3>Employee list</h3>
 			</div>
 			<div class="col-xs-6 col-md-12">
 				<table class="table table-hover">
 					<tr>
 						<th>Employee_id</th>
 						<th>Dep_id</th>
-						<th>Last name<th>
-						<th>First name<th>
-						<th>Middle name<th>
+						<th>L.name<th>
+						<th>F.name<th>
+						<th>M.name<th>
 						<th>Position<th>
 						<th>Sex<th>
 						<th>Contact Info<th>
