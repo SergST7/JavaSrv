@@ -33,6 +33,8 @@ public class EmployeesCommand implements Command {
 
         List<Employee> employees = employeeDao.getAllEmployees();
 
-        return "json";
+        request.setAttribute("employee", employees);
+
+        return "employees.jsp";
     }
 }
