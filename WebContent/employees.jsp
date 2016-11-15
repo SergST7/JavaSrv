@@ -14,10 +14,10 @@
 
 
 		<div class="row">
-			<div class="col-xs-6 col-md-8">
+			<div class="col-xs-6 col-md-12">
 				<h3>Subscribed courses</h3>
 			</div>
-			<div class="col-xs-6 col-md-8">
+			<div class="col-xs-6 col-md-12">
 				<table class="table table-hover">
 					<tr>
 						<th>Employee_id</th>
