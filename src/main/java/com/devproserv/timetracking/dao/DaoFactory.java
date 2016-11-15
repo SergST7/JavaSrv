@@ -39,11 +39,11 @@ public class DaoFactory {
     }
 
     /**
-     * Creates the instance of the UserDao class and returns the link
+     * Creates the instance of the EmployeeDao class and returns the link
      *
-     * @return link to the instance of UserDao
+     * @return link to the instance of EmployeeDao
      */
-    public EmployeeDao getUserDao() {
+    public EmployeeDao getEmployeeDao() {
         return new EmployeeDao(datasrc);
     }
 
