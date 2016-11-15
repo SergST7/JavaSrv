@@ -30,7 +30,7 @@
 						<th>Contact Info<th>
 					</tr>
 					<c:forEach var="employ" items="${requestScope.employee}">
-						<tr class="col-md-12">
+						<tr>
 							<td>${employ.idEmpl}</td>
 							<td>${employ.idDep}</td>
 							<td>${employ.lastName}</td>
