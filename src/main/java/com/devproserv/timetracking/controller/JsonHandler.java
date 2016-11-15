@@ -3,7 +3,6 @@ package com.devproserv.timetracking.controller;
 import com.devproserv.timetracking.command.Command;
 import com.devproserv.timetracking.command.CommandFactory;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,10 +37,12 @@ public class JsonHandler extends HttpServlet {
 	/* gets link to the command from the CommandFactory */
 	Command command = commandFactory.getCommand(request);
 	
-	/* runs the command, gets the page to display from the command and sends the page to the client */
-	String page = command.executeCommand(request);
-	RequestDispatcher reqDisp = request.getRequestDispatcher(page);
-	reqDisp.forward(request, response);
+	
+	String json = command.executeCommand(request);
+	
+	response.setContentType("application/json");
+	response.setCharacterEncoding("UTF-8");
+	response.getWriter().write(json);
     }
     
     /**

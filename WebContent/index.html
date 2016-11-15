@@ -5,6 +5,27 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 		<script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script>
+			$(document).on("click", "#testbutton", function() { 
+				$.get("jsonhandler", function(responseJson) {
+					$("#output").text(""); 
+					var $table = $("<table>").appendTo($("#output"));
+					$.each(responseJson, function(index, employee) {
+						$("<tr>").appendTo($table)
+						.append($("<td>").text(employee.idEmpl)) 
+						.append($("<td>").text(employee.idDep))
+						.append($("<td>").text(employee.lastName))
+						.append($("<td>").text(employee.firstName))
+						.append($("<td>").text(employee.middleName))
+						.append($("<td>").text(employee.position))
+						.append($("<td>").text(employee.sex))
+						.append($("<td>").text(employee.contactInfo));
+					});
+					
+				});
+				
+			});
+		</script>
 	</head>
 	<body>
 		<div class="container">
@@ -21,9 +42,13 @@
 					<p class="lead"></p>
 				</div>
 			</div>
-			<form action="jsonhandler" method="post">
-				<button type="submit" class="btn btn-primary col-xs-4 col-md-3" name="mainbutton" value="allemployees">Submit</button>
-			</form>
+			<div class="row">
+			    <button id="testbutton" type="submit" class="btn btn-primary col-xs-4 col-md-3" name="mainbutton" value="allemployees">Submit</button>
+			</div>
+			<div class="row">
+				<div id="output">this text should be replaced after button pressed.
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

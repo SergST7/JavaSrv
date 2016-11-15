@@ -4,9 +4,9 @@ package com.devproserv.timetracking.command;
 import com.devproserv.timetracking.dao.DaoFactory;
 import com.devproserv.timetracking.dao.Employee;
 import com.devproserv.timetracking.dao.EmployeeDao;
+import com.google.gson.Gson;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -33,8 +33,8 @@ public class EmployeesCommand implements Command {
 
         List<Employee> employees = employeeDao.getAllEmployees();
 
-        request.setAttribute("employee", employees);
+        String json = new Gson().toJson(employees);
 
-        return "employees.jsp";
+        return json;
     }
 }

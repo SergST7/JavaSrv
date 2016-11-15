@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-xs-6 col-md-12">
 				<table class="table table-hover">
-					<tr class="col-md-12">
+					<tr>
 						<th>Employee_id</th>
 						<th>Dep_id</th>
 						<th>L.name<th>
