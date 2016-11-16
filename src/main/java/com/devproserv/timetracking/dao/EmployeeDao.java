@@ -18,17 +18,26 @@ public class EmployeeDao {
     DataSource datasrc;
 
     /* Predefined SQL statements that are used for execution requests in the database, table 'employees' */
+    
+    
+    
     final static String SELECT_ALL_EMPLOYEES_SQL = "SELECT * FROM employees";
+    final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, employees.lastname, employees.firstname, employees.middlename, "
+            + "employees.position, employees.sex, employees.contact_info, employees.created_date, "
+            + "timetracking.id_time, timetracking.date, timetracking.start_time, timetracking.end_time, "
+            + "department.id_dep, department.name, department.description "
+            + "FROM timetr.employees "
+            + "LEFT JOIN timetr.timetracking ON timetracking.id_empl = employees.id_empl "
+            + "JOIN timetr.department ON department.id_dep = employees.id_dep;";
 
+    //final static String SELECT_USER_SQL = "SELECT * FROM students WHERE login=? AND password=?";
+    //final static String SELECT_LOGIN_SQL = "SELECT * FROM students WHERE login=?";
+    //final static String INSERT_USER_SQL = "INSERT INTO students"
+    //        + "(firstname, lastname, login, password, department)"
+    //        + " VALUES(?, ?, ?, ?, ?)";
 
-    final static String SELECT_USER_SQL = "SELECT * FROM students WHERE login=? AND password=?";
-    final static String SELECT_LOGIN_SQL = "SELECT * FROM students WHERE login=?";
-    final static String INSERT_USER_SQL = "INSERT INTO students"
-            + "(firstname, lastname, login, password, department)"
-            + " VALUES(?, ?, ?, ?, ?)";
-
-    final static String GET_USER_FIELDS_SQL = "SELECT student_id, firstname, lastname, department"
-            + " FROM students WHERE login = ?";
+    //final static String GET_USER_FIELDS_SQL = "SELECT student_id, firstname, lastname, department"
+    //        + " FROM students WHERE login = ?";
 
     public EmployeeDao(DataSource datasrc) {
         this.datasrc = datasrc;
@@ -191,6 +200,63 @@ public class EmployeeDao {
         }
         return allEmployees;
     }
+    
+    /**
+     * Executes request into the database and returns list of all employees
+     *
+     * @return list of all employees from the database
+     */
+    public List<EmployeeFullInfo> getAllEmployeesFullInfo() {
+        
+        /* list of items to be returned */
+        List<EmployeeFullInfo> allEmployeesWithTime = new ArrayList<>();
+        
+        /* link to the current database */
+        Connection conn = null;
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+            
+            /* creates simple SQL statement */
+            Statement stmt = conn.createStatement();
+            
+            /* executes the query and receives the result table */
+            ResultSet result = stmt.executeQuery(SELECT_EMPLOYEES_FULL_SQL);
+            
+            /* runs through all rows of the result table, creates an instance of the EmployeeFullInfo,
+             * fills in the instance's fields, and put it into result list */
+            while (result.next()) {
+                EmployeeFullInfo employee = new EmployeeFullInfo();
+                employee.setIdEmpl(result.getInt(1));
+                employee.setLastName(result.getString(2));
+                employee.setFirstName(result.getString(3));
+                employee.setMiddleName(result.getString(4));
+                employee.setPosition(result.getString(5));
+                employee.setSex(result.getString(6));
+                employee.setContactInfo(result.getString(7));
+                employee.setCreatedDate(result.getDate(8));
+                employee.setIdTime(result.getInt(9));
+                employee.setTimeTrackDate(result.getDate(10));
+                employee.setStartTime(result.getTime(11));
+                employee.setEndTime(result.getTime(12));
+                employee.setIdDep(result.getInt(13));
+                employee.setDepName(result.getString(14));
+                employee.setDepDescr(result.getString(15));
+
+                allEmployeesWithTime.add(employee);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return allEmployeesWithTime;
+    }
+    
 
     /**
      * Adds rest of the fields into the object.

@@ -5,26 +5,58 @@
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
 		<script type="text/javascript" src="js/jquery-2.2.2.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.js"></script>
-		<script>
-			$(document).on("click", "#testbutton", function() { 
-				$.get("jsonhandler", "command=allemployees", function(responseJson) {
-					$("#output").text("");
-					var $table = $("<table>").appendTo($("#output"));
-					$.each(responseJson, function(index, employee) {
-						$("<tr>").appendTo($table)
-						.append($("<td>").text(employee.idEmpl)) 
-						.append($("<td>").text(employee.idDep))
-						.append($("<td>").text(employee.lastName))
-						.append($("<td>").text(employee.firstName))
-						.append($("<td>").text(employee.middleName))
-						.append($("<td>").text(employee.position))
-						.append($("<td>").text(employee.sex))
-						.append($("<td>").text(employee.contactInfo));
-					});
-					
-				});
-				
-			});
+		<script type="text/javascript">
+		   $(document).ready(function() {
+			   $("#testbutton").on("click", function() {
+	                $.get("jsonhandler", "command=allemployees", function(responseJson) {
+	                    $("#output").text("");
+	                    var $table = $("<table class=\"table\">").appendTo($("#output"));
+	                    $.each(responseJson, function(index, employee) {
+	                        $("<tr>").appendTo($table)
+	                        .append($("<td>").text(employee.idEmpl)) 
+	                        .append($("<td>").text(employee.idDep))
+	                        .append($("<td>").text(employee.lastName))
+	                        .append($("<td>").text(employee.firstName))
+	                        .append($("<td>").text(employee.middleName))
+	                        .append($("<td>").text(employee.position))
+	                        .append($("<td>").text(employee.sex))
+	                        .append($("<td>").text(employee.contactInfo));
+	                    });
+	                    
+	                });
+	                
+	            });
+			    $("#testbutton2").click(function() {
+	                $.get("jsonhandler", "command=allemployeesfull", function(responseJson) {
+	                    $("#output2").text("");
+	                    var $table = $("<table class=\"table\">").appendTo($("#output2"));
+	                    $.each(responseJson, function(index, employee) {
+	                        $("<tr>").appendTo($table)
+	                        .append($("<td>").text(employee.idEmpl)) 
+	                        .append($("<td>").text(employee.lastName))
+	                        .append($("<td>").text(employee.firstName))
+	                        .append($("<td>").text(employee.middleName))
+	                        .append($("<td>").text(employee.position))
+	                        .append($("<td>").text(employee.sex))
+	                        .append($("<td>").text(employee.contactInfo))
+	                        .append($("<td>").text(employee.createdDate))
+	                        .append($("<td>").text(employee.idTime))
+	                        .append($("<td>").text(employee.timeTrackDate))
+	                        .append($("<td>").text(employee.startTime))
+	                        .append($("<td>").text(employee.endTime))
+	                        .append($("<td>").text(employee.idDep))
+	                        .append($("<td>").text(employee.depName))
+	                        .append($("<td>").text(employee.depDescr));
+	                    });
+	                    
+	                });
+	                
+	            });
+		   
+		   });
+			
+		  
+			
 		</script>
 	</head>
 	<body>
@@ -32,23 +64,41 @@
 			<div class="jumbotron">
 				<h1>Time tracking system</h1>
 			</div>
+			
 			<div class="row">
-				<div class="col-xs-6 col-md-8"><h3>Information</h3>Lorem ipsum
-				</div>
-				<div class="col-xs-6 col-md-4"></div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6 col-md-4"><h3>Button</h3>
+				<div class="col-xs-6 col-md-6"><h3>The request returns all employees</h3>
 					<p class="lead"></p>
 				</div>
 			</div>
 			<div class="row">
-			    <button id="testbutton" type="submit" class="btn btn-primary col-xs-4 col-md-3" name="command" value="allemployees">Submit</button>
+				<button id="testbutton" type="submit" class="btn btn-primary col-xs-4 col-md-2" name="command" value="allemployees">Submit</button>
+				<br>
+				<br>
 			</div>
 			<div class="row">
-				<div id="output">this text should be replaced after button pressed.
+				<div class="breadcrumb">
+					<div id="output">this text should be replaced after button pressed.
+					</div>
 				</div>
 			</div>
+			
+			<div class="row">
+                <div class="col-xs-6 col-md-6"><h3>The request returns full info about employees</h3>
+                    <p class="lead"></p>
+                </div>
+            </div>
+            <div class="row">
+                <button id="testbutton2" type="submit" class="btn btn-primary col-xs-4 col-md-2" name="command" value="allemployeesfull">Submit</button>
+                <br>
+                <br>
+            </div>
+            <div class="row">
+                <div class="breadcrumb">
+                    <div id="output2">this text should be replaced after button pressed.
+                    </div>
+                </div>
+            </div>
+			
 		</div>
 	</body>
 </html>
