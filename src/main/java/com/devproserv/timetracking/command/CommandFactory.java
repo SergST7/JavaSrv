@@ -41,7 +41,7 @@ public class CommandFactory {
      * @return the single instance of the {@code Command}
      */
     public Command getCommand(HttpServletRequest request) {
-        String value = "allemployees";
+        String value = request.getParameter("command");
         return commandMap.get(value);
     }
 }

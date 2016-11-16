@@ -7,8 +7,8 @@
 		<script type="text/javascript" src="js/bootstrap.js"></script>
 		<script>
 			$(document).on("click", "#testbutton", function() { 
-				$.get("jsonhandler", function(responseJson) {
-					$("#output").text(""); 
+				$.get("jsonhandler", "command=allemployees", function(responseJson) {
+					$("#output").text("");
 					var $table = $("<table>").appendTo($("#output"));
 					$.each(responseJson, function(index, employee) {
 						$("<tr>").appendTo($table)
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 			<div class="row">
-			    <button id="testbutton" type="submit" class="btn btn-primary col-xs-4 col-md-3" name="mainbutton" value="allemployees">Submit</button>
+			    <button id="testbutton" type="submit" class="btn btn-primary col-xs-4 col-md-3" name="command" value="allemployees">Submit</button>
 			</div>
 			<div class="row">
 				<div id="output">this text should be replaced after button pressed.

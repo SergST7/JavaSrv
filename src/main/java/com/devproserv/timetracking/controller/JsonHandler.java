@@ -37,7 +37,7 @@ public class JsonHandler extends HttpServlet {
 	/* gets link to the command from the CommandFactory */
 	Command command = commandFactory.getCommand(request);
 	
-	
+	/* gets a json string from command and returns it in response */
 	String json = command.executeCommand(request);
 	
 	response.setContentType("application/json");
