@@ -1,6 +1,5 @@
-var app = angular.module("myApp", [])
+var app = angular.module('myApp', [])
 	.controller('mainController', ['$scope', '$http', function($scope, $http) {
-		
 		
 		$scope.getAllEmployees = function() {
 			$http({

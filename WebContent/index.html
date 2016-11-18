@@ -28,20 +28,38 @@
                 <br>
                 <div class="breadcrumb">
                     <table class="table">
-	                    <tr ng-repeat="employee in data">
-	                       <td>{{ employee.idEmpl }}</td>
-		                    <td>{{ employee.lastName }}</td>
-		                    <td>{{ employee.firstName }}</td>
-		                    <td>{{ employee.middleName }}</td>
-		                    <td>{{ employee.position }}</td>
-		                    <td>{{ employee.depName }}</td>
-		                    <td>{{ employee.timeTrackDate }}</td>
-		                    <td>{{ employee.startTime }}</td>
-		                    <td>{{ employee.endTime }}</td>
-		                    <td><a href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-		                    <td><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
-		                    
-	                    </tr>
+                        <thead>
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Last name</th>
+                                <th>First name</th>
+                                <th>Middle name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Date</th>
+                                <th>Start time</th>
+                                <th>End time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+		                    <tr ng-repeat="employee in data">
+		                       <td class="text-center">{{ employee.idEmpl }}</td>
+			                    <td>{{ employee.lastName }}</td>
+			                    <td>{{ employee.firstName }}</td>
+			                    <td>{{ employee.middleName }}</td>
+			                    <td>{{ employee.position }}</td>
+			                    <td>{{ employee.depName }}</td>
+			                    <td>{{ employee.timeTrackDate }}</td>
+			                    <td>{{ employee.startTime }}</td>
+			                    <td>{{ employee.endTime }}</td>
+			                    <td><a href="{{ employee.idEmpl }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			                    <td><a href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+			                    <td><a href="#"><span class="glyphicon glyphicon-plus"></span></a></td>
+		                    </tr>
+		                    <tr>
+		                      <td class="text-center"><a href="#"><span class="glyphicon glyphicon-plus"></span></a></td>
+		                    </tr>
+	                    </tbody>
                     </table>
                 </div>
             </div>
