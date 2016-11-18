@@ -1,16 +1,20 @@
 var app = angular.module("myApp", [])
-	.controller('mainController', ['$scope', function($scope){
-		$scope.title = 'Employees';
-		$scope.employees = [
-		{
-			name: "name 1",
-			age: 34,
-			description: "description"
-		},
-		{
-			name: "name 2",
-			age: 75,
-			description: "description2"
-		}
-		];
+	.controller('mainController', ['$scope', '$http', function($scope, $http) {
+		
+		
+		$scope.getAllEmployees = function() {
+			$http({
+				method: 'GET',
+				url: 'jsonhandler',
+				params: {'command': 'allemployeesfull'}
+			}).then(function successCallback(response) {
+				$scope.status = response.status;
+				$scope.data = response.data;
+				$scope.employees = response.data;
+			}, function errorCallback(response) {
+				$scope.data = response.data || 'Request failed';
+				$scope.status = response.status;
+			});
+		};
+		
 	}]);
