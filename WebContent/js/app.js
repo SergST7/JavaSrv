@@ -25,6 +25,10 @@ var app = angular.module('myApp', [])
 		}
 	};
 	
+	$scope.employeeCancel = function() {
+		$scope.toShow = false;
+	};
+	
 	$scope.employeeSave = function() {
 		$scope.toShow = false;
 		alert("to be developed");
