@@ -1,5 +1,8 @@
 package com.devproserv.timetracking.dao;
 
+import java.sql.Date;
+import java.sql.Time;
+
 /**
  * Represents the entity of the Time Tracking. Maps the table 'timetracking' in the database.
  *
@@ -10,9 +13,9 @@ public class TimeTracking {
     /* fields representing columns in the table 'timetracking' */
     private int idTime;
     private int idEmpl;
-    private String date;
-    private String startTime;
-    private String endTime;
+    private Date date;
+    private Time startTime;
+    private Time endTime;
 
     /* getters and setters for the private fields */
     public int getIdTime() {
@@ -31,27 +34,27 @@ public class TimeTracking {
         this.idEmpl = idEmpl;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 }

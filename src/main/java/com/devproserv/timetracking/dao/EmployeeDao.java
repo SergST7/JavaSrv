@@ -22,19 +22,22 @@ public class EmployeeDao {
     
     
     final static String SELECT_ALL_EMPLOYEES_SQL = "SELECT * FROM employees";
-    final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, employees.lastname, employees.firstname, employees.middlename, "
+    final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, "
+            + "employees.lastname, employees.firstname, employees.middlename, "
             + "employees.position, employees.sex, employees.contact_info, employees.created_date, "
             + "timetracking.id_time, timetracking.date, timetracking.start_time, timetracking.end_time, "
             + "department.id_dep, department.name, department.description "
             + "FROM timetr.employees "
             + "LEFT JOIN timetr.timetracking ON timetracking.id_empl = employees.id_empl "
             + "JOIN timetr.department ON department.id_dep = employees.id_dep;";
+    final static String INSERT_EMPLOYEE_TIME_SQL = "INSERT INTO timetr.timetracking "
+            + "(id_empl, date, start_time, end_time) "
+            + "VALUES(?, ?, ?, ?)";
+    final static String DELETE_EMPLOYEE_TIME_SQL = "DELETE FROM timetr.timetracking "
+            + "WHERE id_time=? AND id_empl=?;";
 
     //final static String SELECT_USER_SQL = "SELECT * FROM students WHERE login=? AND password=?";
     //final static String SELECT_LOGIN_SQL = "SELECT * FROM students WHERE login=?";
-    //final static String INSERT_USER_SQL = "INSERT INTO students"
-    //        + "(firstname, lastname, login, password, department)"
-    //        + " VALUES(?, ?, ?, ?, ?)";
 
     //final static String GET_USER_FIELDS_SQL = "SELECT student_id, firstname, lastname, department"
     //        + " FROM students WHERE login = ?";
@@ -121,24 +124,23 @@ public class EmployeeDao {
      *
      * @param user the current user
      */
-    /*public void insert(User user) {
-	
-	*//* link to the current database *//*
+    public void insertTime(TimeTracking time) {
+
+        /* link to the current database */
         Connection conn = null;
 
         try {
-	    *//* gets connection to the database from Connection pool *//*
+            /* gets connection to the database from Connection pool */
             conn = datasrc.getConnection();
-	    
-	    *//* prepares SQL statement with parameters *//*
-            PreparedStatement prepStmt = conn.prepareStatement(INSERT_USER_SQL);
-            prepStmt.setString(1, user.getFirstName());
-            prepStmt.setString(2, user.getLastName());
-            prepStmt.setString(3, user.getLogin());
-            prepStmt.setString(4, user.getPassword());
-            prepStmt.setString(5, user.getDepartment());
-	    
-	    *//* executes the query without returning anything *//*
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(INSERT_EMPLOYEE_TIME_SQL);
+            prepStmt.setInt(1, time.getIdEmpl());
+            prepStmt.setDate(2, time.getDate());
+            prepStmt.setTime(3, time.getStartTime());
+            prepStmt.setTime(4, time.getEndTime());
+
+            /* executes the query without returning anything */
             prepStmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +151,38 @@ public class EmployeeDao {
                 e.printStackTrace();
             }
         }
-    }*/
+    }
+    
+    /**
+     * Executes request into the database (table 'students') to insert the current user.
+     *
+     * @param user the current user
+     */
+    public void deleteTime(int idEmployee, int idTime) {
+        /* link to the current database */
+        Connection conn = null;
+
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(DELETE_EMPLOYEE_TIME_SQL);
+            prepStmt.setInt(1, idTime);
+            prepStmt.setInt(2, idEmployee);
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Executes request into the database and returns list of all employees

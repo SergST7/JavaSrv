@@ -22,8 +22,8 @@ public class CommandFactory {
     private CommandFactory() {
         commandMap.put("allemployees", new EmployeesCommand());
         commandMap.put("allemployeesfull", new EmployeesFullInfoCommand());
-        //commandMap.put("courseselect", new CourseSelectCommand());
-        //commandMap.put("logout", new LogoutCommand());
+        commandMap.put("addtime", new AddTimeCommand());
+        commandMap.put("deltime", new DeleteTimeCommand());
     }
 
     /**

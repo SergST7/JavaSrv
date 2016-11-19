@@ -4,10 +4,15 @@ package com.devproserv.timetracking.command;
 import com.devproserv.timetracking.dao.DaoFactory;
 import com.devproserv.timetracking.dao.EmployeeDao;
 import com.devproserv.timetracking.dao.EmployeeFullInfo;
+import com.devproserv.timetracking.utilities.DateSerializer;
+import com.devproserv.timetracking.utilities.TimeSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -34,7 +39,12 @@ public class EmployeesFullInfoCommand implements Command {
 
         List<EmployeeFullInfo> employees = employeeDao.getAllEmployeesFullInfo();
         
-        Gson gson = new GsonBuilder().serializeNulls().create();
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                .registerTypeAdapter(Date.class, new DateSerializer())
+                .registerTypeAdapter(Time.class, new TimeSerializer())
+                .serializeNulls();
+        
+        Gson gson = gsonBuilder.create();
         String json = gson.toJson(employees);
         
         return json;

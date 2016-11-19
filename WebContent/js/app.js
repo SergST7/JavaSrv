@@ -3,14 +3,13 @@ var app = angular.module('myApp', []).controller(
 
              $scope.getAllEmployees = function() {
                  $http({
-                     method : 'GET',
+                     method : 'POST',
                      url : 'jsonhandler',
                      params : {
                          'command' : 'allemployeesfull'
                      }
                  }).then(function successCallback(response) {
                      $scope.status = response.status;
-                     $scope.data = response.data;
                      $scope.employees = response.data;
                  }, function errorCallback(response) {
                      $scope.data = response.data || 'Request failed';
@@ -106,6 +105,7 @@ var app = angular.module('myApp', []).controller(
                      $scope.toShowAdd = false;
                  }
                  $scope.toShowAddTime = true;
+                 
              };
              
              $scope.timeNewCancel = function() {
@@ -114,32 +114,62 @@ var app = angular.module('myApp', []).controller(
              };
              $scope.timeNewSave = function() {
                  $scope.toShowAddTime = false;
-                 alert("to be developed");
-                 /* send request for add new employee to server or */
+                 
+                 $scope.jsonAddTime = {
+                         idTime: 0,
+                         idEmpl: $scope.employeeToAddTime.idEmpl,
+                         date: $scope.employeeToAddTime.timeTrackDate,
+                         startTime: $scope.employeeToAddTime.startTime,
+                         endTime: $scope.employeeToAddTime.endTime
+                 };
+                 
+                 $http({
+                     method: 'POST',
+                     url: 'jsonhandler',
+                     params: {'command': 'addtime'},
+                     data: $scope.jsonAddTime
+                     
+                 }).then(function successCallback(response) {
+                     $scope.statusTime = response.status;
+                     $scope.dataTime = response.data;
+                 }, function errorCallback(response) {
+                     $scope.dataTime = response.data || 'Request failed';
+                     $scope.statusTime = response.status;
+                 });
+                 
+                 // TODO use promise to wait until the response comes
+                 
+                 this.getAllEmployees();
+                 
              };
              
              /* ------ Delete tracking time ------ */
              $scope.deleteTime = function(id, idTime) {
+                 
                  for (var i = 0; i < $scope.employees.length; i++) {
                      if ($scope.employees[i].idEmpl === id
                              && $scope.employees[i].idTime === idTime) {
                          // check if time tracking rows are available
                          if ($scope.employees[i].idTime != 0 && $scope.employees[i].idTime != null) {
-                             console.log($scope.employees[i].idTime);
-                             $scope.employees.splice(i, 1);
-                             // TODO remove time on server
+                             $http({
+                                 method: 'POST',
+                                 url: 'jsonhandler',
+                                 params: {'command': 'deltime',
+                                     'idemployee': id,
+                                     'idtime': idTime}
+                             }).then(function successCallback(response) {
+                                 $scope.statusDelete = response.status;
+                                 $scope.dataDelete = response.data;
+                             }, function errorCallback(response) {
+                                 $scope.dataDelete = response.data || 'Request failed';
+                                 $scope.statusDelete = response.status;
+                             });
                          }
-                         
                          break;
-                         
-                         
                      }
                  }
-                 
-                 //this.getAllEmployees(); // after delete on server implementation
-
-                 
-
+                 // TODO use promise to wait until the response comes
+                 this.getAllEmployees();
              };
              
 

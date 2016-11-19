@@ -46,13 +46,4 @@ public class DaoFactory {
     public EmployeeDao getEmployeeDao() {
         return new EmployeeDao(datasrc);
     }
-
-    /**
-     * Creates the instance of the CourseDao class and returns the link
-     *
-     * @return link to the instance of CourseDao
-     */
-    /*public CourseDao getCourseDao() {
-        return new CourseDao(datasrc);
-    }*/
 }
