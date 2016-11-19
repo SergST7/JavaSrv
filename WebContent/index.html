@@ -12,163 +12,273 @@
 
 </head>
 <body ng-app="myApp">
-    <div class="container">
-        <div class="page-header">
-            <h1>Time tracking system</h1>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12 col-lg-6">
-                <h3>Employee list with time tracking</h3>
-                <p class="lead"></p>
-            </div>
-        </div>
-
-        <div class="row" ng-controller="MainController"
-            ng-init="getAllEmployees()">
-
-            <br>
-            <div class="breadcrumb col-xs-12 col-lg-12">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Employee ID</th>
-                            <th>Last name</th>
-                            <th>First name</th>
-                            <th>Middle name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Date</th>
-                            <th>Start time</th>
-                            <th>End time</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="employee in employees">
-                            <td class="text-center">{{ employee.idEmpl }}</td>
-                            <td>{{ employee.lastName }}</td>
-                            <td>{{ employee.firstName }}</td>
-                            <td>{{ employee.middleName }}</td>
-                            <td>{{ employee.position }}</td>
-                            <td>{{ employee.depName }}</td>
-                            <td>{{ employee.timeTrackDate }}</td>
-                            <td>{{ employee.startTime }}</td>
-                            <td>{{ employee.endTime }}</td>
-                            <td><a href
-                                ng-click="editEmployee(employee.idEmpl, employee.idTime)"
-                                title="Edit data of employee ID: {{employee.idEmpl}}"><span
-                                    class="glyphicon glyphicon-pencil"></span></a></td>
-                            <td><a href="#"
-                                title="Remove tracking time with ID: {{employee.idTime}}"><span
-                                    class="glyphicon glyphicon-remove"></span></a></td>
-                            <td><a href="#"
-                                title="Add new tracking time for employee ID: {{employee.idEmpl}}"><span
-                                    class="glyphicon glyphicon-plus"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td class="text-center"><a href
-                                ng-click="addNewEmployee()"
-                                title="Add new employee"><span
-                                    class="glyphicon glyphicon-plus"></span></a></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-            <br>
-            <div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
-                ng-show="toShow">
-                <h3>Form for editing employee data</h3>
-                <form name="myForm" class="form-inline">
-                    <div class="form-group">
-                        <label for="idempl">Employee ID</label> <input
-                            type="text" class="form-control" name="idempl"
-                            ng-model="employeeToEdit.idEmpl">
-                    </div>
-                    <div class="form-group">
-                        <label for="lastname">Last name</label> <input
-                            type="text" class="form-control" name="lastname"
-                            ng-model="employeeToEdit.lastName">
-                    </div>
-                    <div class="form-group">
-                        <label for="firstname">First name</label> <input
-                            type="text" class="form-control" name="firstname"
-                            ng-model="employeeToEdit.firstName">
-                    </div>
-                    <div class="form-group">
-                        <label for="middlename">Middle name</label> <input
-                            type="text" class="form-control" name="middlename"
-                            ng-model="employeeToEdit.middleName">
-                    </div>
-                    <div class="form-group">
-                        <label for="position">Position</label> <input
-                            type="text" class="form-control" name="position"
-                            ng-model="employeeToEdit.position">
-                    </div>
-                    <div class="form-group">
-                        <label for="sex">Sex</label> <input type="text"
-                            class="form-control" name="sex"
-                            ng-model="employeeToEdit.sex">
-                    </div>
-                    <div class="form-group">
-                        <label for="contactinfo">Contact info</label> <input
-                            type="text" class="form-control" name="contactinfo"
-                            ng-model="employeeToEdit.contactInfo">
-                    </div>
-                    <div class="form-group">
-                        <label for="createddate">Created date</label> <input
-                            type="text" class="form-control" name="createddate"
-                            ng-model="employeeToEdit.createdDate">
-                    </div>
-                    <div class="form-group">
-                        <label for="idtime">Time ID</label> <input type="text"
-                            class="form-control" name="idtime"
-                            ng-model="employeeToEdit.idTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="timetrackdate">Time track date</label> <input
-                            type="text" class="form-control"
-                            name="timetrackdate"
-                            ng-model="employeeToEdit.timeTrackDate">
-                    </div>
-                    <div class="form-group">
-                        <label for="starttime">Start time</label> <input
-                            type="text" class="form-control" name="starttime"
-                            ng-model="employeeToEdit.startTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="endtime">End time</label> <input type="text"
-                            class="form-control" name="endtime"
-                            ng-model="employeeToEdit.endTime">
-                    </div>
-                    <div class="form-group">
-                        <label for="iddep">Department ID</label> <input
-                            type="text" class="form-control" name="iddep"
-                            ng-model="employeeToEdit.idDep">
-                    </div>
-                    <div class="form-group">
-                        <label for="depname">Department name</label> <input
-                            type="text" class="form-control" name="depname"
-                            ng-model="employeeToEdit.depName">
-                    </div>
-                    <div class="form-group">
-                        <label for="depdescr">Department description</label> <input
-                            type="text" class="form-control" name="depdescr"
-                            ng-model="employeeToEdit.depDescr">
-                    </div>
-                    <br> <br>
-                    <button ng-click="employeeCancel()" class="btn btn-default">Cancel</button>
-                    <button ng-click="employeeSave()"
-                        ng-disabled="myForm.$invalid" class="btn btn-primary">Save</button>
-                    <button ng-click="employeeDelete()" class="btn btn-danger">Delete</button>
-
-                </form>
-            </div>
-
-
-
-        </div>
+  <div class="container">
+    <div class="page-header">
+      <h1>Time tracking system</h1>
     </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-lg-6">
+        <h3>Employee list with time tracking</h3>
+        <p class="lead"></p>
+      </div>
+    </div>
+
+    <div class="row" ng-controller="MainController" ng-init="getAllEmployees()">
+
+      <br>
+      <div class="breadcrumb col-xs-12 col-lg-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Last name</th>
+              <th>First name</th>
+              <th>Middle name</th>
+              <th>Position</th>
+              <th>Department</th>
+              <th>Date</th>
+              <th>Start time</th>
+              <th>End time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="employee in employees">
+              <td class="text-center">{{ employee.idEmpl }}</td>
+              <td>{{ employee.lastName }}</td>
+              <td>{{ employee.firstName }}</td>
+              <td>{{ employee.middleName }}</td>
+              <td>{{ employee.position }}</td>
+              <td>{{ employee.depName }}</td>
+              <td>{{ employee.timeTrackDate }}</td>
+              <td>{{ employee.startTime }}</td>
+              <td>{{ employee.endTime }}</td>
+              <td><a href ng-click="editEmployee(employee.idEmpl, employee.idTime)"
+                title="Edit data of employee ID: {{employee.idEmpl}}"><span
+                  class="glyphicon glyphicon-pencil"></span></a></td>
+              <td><a href
+                ng-click="deleteTime(employee.idEmpl, employee.idTime)"
+                title="Remove tracking time with ID: {{employee.idTime}}"><span
+                  class="glyphicon glyphicon-remove"></span></a></td>
+              <td><a href
+                ng-click="addNewTime(employee.idEmpl)"
+                title="Add new tracking time for employee ID: {{employee.idEmpl}}"><span
+                  class="glyphicon glyphicon-plus"></span></a></td>
+            </tr>
+            <tr>
+              <td class="text-center"><a href ng-click="addNewEmployee()"
+                title="Add new employee"><span
+                  class="glyphicon glyphicon-plus"></span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <br>
+
+      <!-- Form for editing employee  -->
+      <div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
+        ng-show="toShowEdit">
+        <h3>Form for editing employee data</h3>
+        <form name="myForm" class="form-inline">
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="idempl">Employee ID</label> <input type="text"
+              class="form-control" name="idempl"
+              ng-model="employeeToEdit.idEmpl" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="lastname">Last name</label> <input type="text"
+              class="form-control" name="lastname"
+              ng-model="employeeToEdit.lastName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="firstname">First name</label> <input type="text"
+              class="form-control" name="firstname"
+              ng-model="employeeToEdit.firstName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="middlename">Middle name</label> <input type="text"
+              class="form-control" name="middlename"
+              ng-model="employeeToEdit.middleName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="position">Position</label> <input type="text"
+              class="form-control" name="position"
+              ng-model="employeeToEdit.position">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="sex">Sex</label> <input type="text" class="form-control"
+              name="sex" ng-model="employeeToEdit.sex">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="contactinfo">Contact info</label> <input type="text"
+              class="form-control" name="contactinfo"
+              ng-model="employeeToEdit.contactInfo">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="createddate">Created date</label> <input type="text"
+              class="form-control" name="createddate"
+              ng-model="employeeToEdit.createdDate">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="idtime">Time ID</label> <input type="text"
+              class="form-control" name="idtime"
+              ng-model="employeeToEdit.idTime" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="timetrackdate">Track date</label> <input
+              type="text" class="form-control" name="timetrackdate"
+              ng-model="employeeToEdit.timeTrackDate">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="starttime">Start time</label> <input type="text"
+              class="form-control" name="starttime"
+              ng-model="employeeToEdit.startTime">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="endtime">End time</label> <input type="text"
+              class="form-control" name="endtime"
+              ng-model="employeeToEdit.endTime">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="iddep">Department ID</label> <input type="text"
+              class="form-control" name="iddep" ng-model="employeeToEdit.idDep"
+              ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="depname">Department name</label>
+            <input type="search" class="form-control" name="depname" ng-model="deparName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="depdescr">Department description</label> <input
+              type="text" class="form-control" name="depdescr"
+              ng-model="employeeToEdit.depDescr" ng-readonly="true">
+          </div>
+          <br> <br>
+          <button ng-click="employeeCancel()" class="btn btn-default">Cancel</button>
+          <button ng-click="employeeSave()" ng-disabled="myForm.$invalid"
+            class="btn btn-primary">Save</button>
+          <button ng-click="employeeDelete()" class="btn btn-danger">Delete</button>
+
+        </form>
+      </div>
+
+      <!-- Form for adding employee  -->
+      <div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
+        ng-show="toShowAdd">
+        <h3>Form for adding new employee</h3>
+        <form name="myForm" class="form-inline">
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="lastname">Last name</label> <input type="text"
+              class="form-control" name="lastname"
+              ng-model="employeeToAdd.lastName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="firstname">First name</label> <input type="text"
+              class="form-control" name="firstname"
+              ng-model="employeeToAdd.firstName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="middlename">Middle name</label> <input type="text"
+              class="form-control" name="middlename"
+              ng-model="employeeToAdd.middleName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="position">Position</label> <input type="text"
+              class="form-control" name="position"
+              ng-model="employeeToAdd.position">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="sex">Sex</label> <input type="text" class="form-control"
+              name="sex" ng-model="employeeToAdd.sex">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="contactinfo">Contact info</label> <input type="text"
+              class="form-control" name="contactinfo"
+              ng-model="employeeToAdd.contactInfo">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="createddate">Created date</label> <input type="text"
+              class="form-control" name="createddate"
+              ng-model="employeeToAdd.createdDate">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="iddep">Department ID</label> <input type="text"
+              class="form-control" name="iddep" ng-model="employeeToAdd.idDep"
+              ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="depname">Department name</label>
+            <input type="search" class="form-control" name="depname"
+              ng-model="employeeToAdd.depName">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="depdescr">Department description</label> <input
+              type="text" class="form-control" name="depdescr"
+              ng-model="employeeToAdd.depDescr" ng-readonly="true">
+          </div>
+          <br>
+          <br>
+          <br>
+          <button ng-click="employeeNewCancel()" class="btn btn-default">Cancel</button>
+          <button ng-click="employeeNewSave()" class="btn btn-primary">Save</button>
+
+        </form>
+      </div>
+      
+      <!-- Form for adding tracking time -->
+      <div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
+        ng-show="toShowAddTime">
+        <h3>Form to add new tracking time</h3>
+        <form name="myForm" class="form-inline">
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="idempl">Employee ID</label> <input type="text"
+              class="form-control" name="idempl"
+              ng-model="employeeToAddTime.idEmpl" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="lastname">Last name</label> <input type="text"
+              class="form-control" name="lastname"
+              ng-model="employeeToAddTime.lastName" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="firstname">First name</label> <input type="text"
+              class="form-control" name="firstname"
+              ng-model="employeeToAddTime.firstName" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="depname">Department name</label>
+            <input type="search" class="form-control" name="depname"
+              ng-model="employeeToAddTime.depName" ng-readonly="true">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="timetrackdate">Track date</label> <input
+              type="text" class="form-control" name="timetrackdate"
+              ng-model="employeeToAddTime.timeTrackDate">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="starttime">Start time</label> <input type="text"
+              class="form-control" name="starttime"
+              ng-model="employeeToAddTime.startTime">
+          </div>
+          <div class="form-group col-xs-6 col-lg-4">
+            <label for="endtime">End time</label> <input type="text"
+              class="form-control" name="endtime"
+              ng-model="employeeToAddTime.endTime">
+          </div>
+          <br>
+          <br>
+          <br>
+          <button ng-click="timeNewCancel()" class="btn btn-default">Cancel</button>
+          <button ng-click="timeNewSave()" class="btn btn-primary">Save</button>
+
+        </form>
+      </div>
+
+
+
+    </div>
+  </div>
 </body>
 </html>
