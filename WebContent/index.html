@@ -53,15 +53,15 @@
               <td>{{ employee.timeTrackDate }}</td>
               <td>{{ employee.startTime }}</td>
               <td>{{ employee.endTime }}</td>
-              <td><a href ng-click="editEmployee(employee.idEmpl, employee.idTime)"
+              <td><a href ng-click="editEmployee($index)"
                 title="Edit data of employee ID: {{employee.idEmpl}}"><span
                   class="glyphicon glyphicon-pencil"></span></a></td>
               <td><a href
-                ng-click="deleteTime(employee.idEmpl, employee.idTime)"
+                ng-click="deleteTime($index)"
                 title="Remove tracking time with ID: {{employee.idTime}}"><span
                   class="glyphicon glyphicon-remove"></span></a></td>
               <td><a href
-                ng-click="addNewTime(employee.idEmpl)"
+                ng-click="addNewTime($index)"
                 title="Add new tracking time for employee ID: {{employee.idEmpl}}"><span
                   class="glyphicon glyphicon-plus"></span></a></td>
             </tr>

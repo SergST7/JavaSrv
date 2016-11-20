@@ -34,7 +34,7 @@ public class EmployeeDao {
             + "(id_empl, date, start_time, end_time) "
             + "VALUES(?, ?, ?, ?)";
     final static String DELETE_EMPLOYEE_TIME_SQL = "DELETE FROM timetr.timetracking "
-            + "WHERE id_time=? AND id_empl=?;";
+            + "WHERE id_time=?;";
 
     //final static String SELECT_USER_SQL = "SELECT * FROM students WHERE login=? AND password=?";
     //final static String SELECT_LOGIN_SQL = "SELECT * FROM students WHERE login=?";
@@ -158,7 +158,7 @@ public class EmployeeDao {
      *
      * @param user the current user
      */
-    public void deleteTime(int idEmployee, int idTime) {
+    public void deleteTime(int idTime) {
         /* link to the current database */
         Connection conn = null;
 
@@ -169,7 +169,6 @@ public class EmployeeDao {
             /* prepares SQL statement with parameters */
             PreparedStatement prepStmt = conn.prepareStatement(DELETE_EMPLOYEE_TIME_SQL);
             prepStmt.setInt(1, idTime);
-            prepStmt.setInt(2, idEmployee);
 
             /* executes the query without returning anything */
             prepStmt.execute();

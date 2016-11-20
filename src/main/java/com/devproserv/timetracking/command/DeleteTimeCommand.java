@@ -19,13 +19,11 @@ public class DeleteTimeCommand implements Command {
         DaoFactory daoFactory = DaoFactory.getInstance();
         EmployeeDao employeeDao = daoFactory.getEmployeeDao();
         
-        String idEmployeeToDeleteStr = request.getParameter("idemployee");
         String idTimeToDeleteStr = request.getParameter("idtime");
         
-        int idEmployeeToDelete = Integer.parseInt(idEmployeeToDeleteStr);
         int idTimeToDelete = Integer.parseInt(idTimeToDeleteStr);
         
-        employeeDao.deleteTime(idEmployeeToDelete, idTimeToDelete);
+        employeeDao.deleteTime(idTimeToDelete);
         
         String outJson = "{\"status\": \"ok\"}";
         
