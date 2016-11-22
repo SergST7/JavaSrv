@@ -37,36 +37,3 @@ app.config(['$routeProvider', function($routeProvider) {
         redirectTo : '/'
     });
 }]);
-
-
-
-
-
-app.controller('MainController', ['$scope', '$http', function($scope, $http) {
-
-             
-             /* ------ Delete tracking time ------ */
-             $scope.deleteTime = function(index) {
-                 
-                 if ($scope.employees[index].idTime != 0 && $scope.employees[index].idTime != null) {
-                     $http({
-                         method: 'POST',
-                         url: 'jsonhandler',
-                         params: {'command': 'deltime',
-                             'idtime': $scope.employees[index].idTime}
-                     }).then(function successCallback(response) {
-                         $scope.statusDelete = response.status;
-                         $scope.dataDelete = response.data;
-                         
-                     }, function errorCallback(response) {
-                         $scope.dataDelete = response.data || 'Request failed';
-                         $scope.statusDelete = response.status;
-                     });
-                 }
-                 
-                 this.getAllEmployees();
-             };
-             
-
-
-         } ]);
