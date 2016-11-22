@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-xs-12 col-lg-6">
+    <h3>Employee list with time tracking</h3>
+    <p class="lead"></p>
+  </div>
+</div>
+
+<div class="row" ng-init="getAllEmployees()">
+  <div class="breadcrumb col-xs-12 col-lg-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Last name</th>
+          <th>First name</th>
+          <th>Middle name</th>
+          <th>Position</th>
+          <th>Department</th>
+          <th>Date</th>
+          <th>Start time</th>
+          <th>End time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="employee in employees">
+          <td class="text-center" ng-bind="employee.idEmpl"></td>
+          <td ng-bind="employee.lastName"></td>
+          <td ng-bind="employee.firstName"></td>
+          <td ng-bind="employee.middleName"></td>
+          <td ng-bind="employee.position"></td>
+          <td ng-bind="employee.depName"></td>
+          <td ng-bind="employee.timeTrackDate"></td>
+          <td ng-bind="employee.startTime"></td>
+          <td ng-bind="employee.endTime"></td>
+          <td><a href ng-click="main.editEmployee($index)"
+            title="Edit data of employee ID: {{employee.idEmpl}}"><span
+              class="glyphicon glyphicon-pencil"></span></a></td>
+          <td><a href ng-click="deleteTime($index)"
+            title="Remove tracking time with ID: {{employee.idTime}}"><span
+              class="glyphicon glyphicon-remove"></span></a></td>
+          <td><a href ng-click="addNewTime($index)"
+            title="Add new tracking time for employee ID: {{employee.idEmpl}}"><span
+              class="glyphicon glyphicon-plus"></span></a></td>
+        </tr>
+        <tr>
+          <td class="text-center"><a href ng-click="main.addNewEmployee()"
+            title="Add new employee"><span class="glyphicon glyphicon-plus"></span></a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

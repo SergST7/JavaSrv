@@ -1,0 +1,45 @@
+<!-- Form for adding tracking time -->
+<div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
+  ng-show="toShowAddTime">
+  <h3>Form to add new tracking time</h3>
+  <form name="myForm" class="form-inline">
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="idempl">Employee ID</label> <input type="text"
+        class="form-control" name="idempl" ng-model="employeeToAddTime.idEmpl"
+        ng-readonly="true">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="lastname">Last name</label> <input type="text"
+        class="form-control" name="lastname"
+        ng-model="employeeToAddTime.lastName" ng-readonly="true">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="firstname">First name</label> <input type="text"
+        class="form-control" name="firstname"
+        ng-model="employeeToAddTime.firstName" ng-readonly="true">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="depname">Department name</label> <input type="search"
+        class="form-control" name="depname" ng-model="employeeToAddTime.depName"
+        ng-readonly="true">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="timetrackdate">Track date</label> <input type="text"
+        class="form-control" name="timetrackdate"
+        ng-model="employeeToAddTime.timeTrackDate">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="starttime">Start time</label> <input type="text"
+        class="form-control" name="starttime"
+        ng-model="employeeToAddTime.startTime">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="endtime">End time</label> <input type="text"
+        class="form-control" name="endtime" ng-model="employeeToAddTime.endTime">
+    </div>
+    <br> <br> <br>
+    <button ng-click="timeNewCancel()" class="btn btn-default">Cancel</button>
+    <button ng-click="timeNewSave()" class="btn btn-primary">Save</button>
+
+  </form>
+</div>

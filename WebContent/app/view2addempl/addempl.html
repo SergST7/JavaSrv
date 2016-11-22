@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-xs-12 col-lg-6">
+    <h3>Add new employee</h3>
+    <p class="lead"></p>
+  </div>
+</div>
+
+<div class="well well-lg col-xs-12 col-lg-12">
+  <form name="myForm" class="form-inline">
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="lastname">Last name</label> <input type="text"
+        class="form-control" name="lastname" ng-model="employeeToAdd.lastName">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="firstname">First name</label> <input type="text"
+        class="form-control" name="firstname" ng-model="employeeToAdd.firstName">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="middlename">Middle name</label> <input type="text"
+        class="form-control" name="middlename"
+        ng-model="employeeToAdd.middleName">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="position">Position</label> <input type="text"
+        class="form-control" name="position" ng-model="employeeToAdd.position">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="sex">Sex</label> <input type="text" class="form-control"
+        name="sex" ng-model="employeeToAdd.sex">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="contactinfo">Contact info</label> <input type="text"
+        class="form-control" name="contactinfo"
+        ng-model="employeeToAdd.contactInfo">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="createddate">Created date</label> <input type="text"
+        class="form-control" name="createddate"
+        ng-model="employeeToAdd.createdDate">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="iddep">Department ID</label> <input type="text"
+        class="form-control" name="iddep" ng-model="employeeToAdd.idDep"
+        ng-readonly="true">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="depname">Department name</label> <input type="search"
+        class="form-control" name="depname" ng-model="employeeToAdd.depName">
+    </div>
+    <div class="form-group col-xs-6 col-lg-4">
+      <label for="depdescr">Department description</label> <input type="text"
+        class="form-control" name="depdescr" ng-model="employeeToAdd.depDescr"
+        ng-readonly="true">
+    </div>
+    <br> <br> <br>
+    <button ng-click="newempl.provideCancel()" class="btn btn-default">Cancel</button>
+    <button ng-click="newempl.provideSave()" class="btn btn-primary">Save</button>
+
+  </form>
+</div>
