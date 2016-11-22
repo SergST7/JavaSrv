@@ -44,54 +44,6 @@ app.config(['$routeProvider', function($routeProvider) {
 
 app.controller('MainController', ['$scope', '$http', function($scope, $http) {
 
-             /* ------ Add new tracking time ------ */
-             $scope.toShowAddTime = false;
-             $scope.addNewTime = function(index) {
-                 
-                 $scope.employeeToAddTime = $scope.employees[index];
-
-                 if ($scope.toShowEdit == true) {
-                     $scope.toShowEdit = false;
-                 }
-                 if ($scope.toShowAdd == true) {
-                     $scope.toShowAdd = false;
-                 }
-                 $scope.toShowAddTime = true;
-                 
-             };
-             
-             $scope.timeNewCancel = function() {
-                 $scope.toShowAddTime = false;
-                 this.getAllEmployees();
-             };
-             $scope.timeNewSave = function() {
-                 $scope.toShowAddTime = false;
-                 
-                 $scope.jsonAddTime = {
-                         idTime: 0,
-                         idEmpl: $scope.employeeToAddTime.idEmpl,
-                         date: $scope.employeeToAddTime.timeTrackDate,
-                         startTime: $scope.employeeToAddTime.startTime,
-                         endTime: $scope.employeeToAddTime.endTime
-                 };
-                 
-                 $http({
-                     method: 'POST',
-                     url: 'jsonhandler',
-                     params: {'command': 'addtime'},
-                     data: $scope.jsonAddTime
-                     
-                 }).then(function successCallback(response) {
-                     $scope.statusTime = response.status;
-                     $scope.dataTime = response.data;
-                     this.getAllEmployees();
-                 }, function errorCallback(response) {
-                     $scope.dataTime = response.data || 'Request failed';
-                     $scope.statusTime = response.status;
-                     this.getAllEmployees();
-                 });
-                 
-             };
              
              /* ------ Delete tracking time ------ */
              $scope.deleteTime = function(index) {

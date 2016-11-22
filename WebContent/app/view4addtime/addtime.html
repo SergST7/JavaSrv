@@ -1,7 +1,11 @@
-<!-- Form for adding tracking time -->
-<div class="well well-lg col-xs-12 col-lg-10 col-lg-offset-1"
-  ng-show="toShowAddTime">
-  <h3>Form to add new tracking time</h3>
+<div class="row">
+  <div class="col-xs-12 col-lg-6">
+    <h3>Add new time for {{ employeeToAddTime.firstName }} {{ employeeToAddTime.lastName }}</h3>
+    <p class="lead"></p>
+  </div>
+</div>
+
+<div class="well well-lg col-xs-12 col-lg-12">
   <form name="myForm" class="form-inline">
     <div class="form-group col-xs-6 col-lg-4">
       <label for="idempl">Employee ID</label> <input type="text"
@@ -38,8 +42,8 @@
         class="form-control" name="endtime" ng-model="employeeToAddTime.endTime">
     </div>
     <br> <br> <br>
-    <button ng-click="timeNewCancel()" class="btn btn-default">Cancel</button>
-    <button ng-click="timeNewSave()" class="btn btn-primary">Save</button>
+    <button ng-click="newtime.provideCancel()" class="btn btn-default">Cancel</button>
+    <button ng-click="newtime.provideSave()" class="btn btn-primary">Save</button>
 
   </form>
 </div>

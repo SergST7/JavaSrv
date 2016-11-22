@@ -31,4 +31,14 @@ app.controller('MainCtrl', ['$scope', '$rootScope', '$location', 'NetService', f
         $location.path('/addempl');
     };
     
+    this.addNewTime = function(index) {
+        $rootScope.employeeToAddTime = $scope.employees[index];
+        $location.path('/addtime');
+    };
+    
+    this.deleteTime = function(index) {
+        $rootScope.employeeToDelTime = $scope.employees[index];
+        $location.path('/deltime');
+    };
+    
 }]);
