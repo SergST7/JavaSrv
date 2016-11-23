@@ -27,7 +27,7 @@ app.controller('DelTimeCtrl', [
         $location.path('/');
     };
 
-    this.provideYes = function() {
+    this.provideDelete = function() {
         
         if ($scope.employeeToDelTime.idTime != 0 && $scope.employeeToDelTime.idTime != null) {
             NetServiceDelTime.delTime($scope.employeeToDelTime.idTime)
