@@ -34,7 +34,7 @@ app.controller('AddTimeCtrl', [
 
     this.provideSave = function() {
         
-        $scope.jsonAddTime = {
+        var jsonAddTime = {
             idTime: 0,
             idEmpl: $scope.employeeToAddTime.idEmpl,
             date: $scope.employeeToAddTime.timeTrackDate,
@@ -42,17 +42,14 @@ app.controller('AddTimeCtrl', [
             endTime: $scope.employeeToAddTime.endTime
         };
         
-        this.sendNewTime($scope.jsonAddTime);
-       
-    };
-    
-    this.sendNewTime = function(json) {
-        NetServiceAddTime.sendNewTime(json).success(function() { 
+        NetServiceAddTime.sendNewTime(jsonAddTime).success(function() { 
             $location.path('/'); 
         }).error(function() {
             alert('Error!');
             $location.path('/'); 
         });
+        
+       
     };
     
 }]);

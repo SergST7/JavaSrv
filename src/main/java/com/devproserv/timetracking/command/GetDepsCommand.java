@@ -1,20 +1,21 @@
 package com.devproserv.timetracking.command;
 
-
 import com.devproserv.timetracking.dao.DaoFactory;
-import com.devproserv.timetracking.dao.Employee;
+import com.devproserv.timetracking.dao.Department;
 import com.devproserv.timetracking.dao.EmployeeDao;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.servlet.http.HttpServletRequest;
+
 import java.util.List;
 
 /**
- * {@code LoginCommand} handles access for the existing user
+ * {@code GetDepsCommand} handles access to departments
  *
  * @author vovas11
  */
-public class EmployeesCommand implements Command {
+public class GetDepsCommand implements Command {
     /**
      * Defines if the name and password of the user exists in the database and if yes,
      * returns the page for the user. If not, returns the starting page
@@ -31,10 +32,14 @@ public class EmployeesCommand implements Command {
 
         /* creates new user and sets the fields received from the user form via HTTP request */
 
-        List<Employee> employees = employeeDao.getAllEmployees();
-
-        String json = new Gson().toJson(employees);
-
+        List<Department> deps = employeeDao.getDeps();
+        
+        GsonBuilder gsonBuilder = new GsonBuilder()
+                .serializeNulls();
+        
+        Gson gson = gsonBuilder.create();
+        String json = gson.toJson(deps);
+        
         return json;
     }
 }

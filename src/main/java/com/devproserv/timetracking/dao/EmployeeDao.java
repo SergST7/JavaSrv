@@ -21,7 +21,7 @@ public class EmployeeDao {
     
     
     
-    final static String SELECT_ALL_EMPLOYEES_SQL = "SELECT * FROM employees";
+    final static String SELECT_DEPS_SQL = "SELECT * FROM department";
     final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, "
             + "employees.lastname, employees.firstname, employees.middlename, "
             + "employees.position, employees.sex, employees.contact_info, employees.created_date, "
@@ -30,6 +30,9 @@ public class EmployeeDao {
             + "FROM timetr.employees "
             + "LEFT JOIN timetr.timetracking ON timetracking.id_empl = employees.id_empl "
             + "JOIN timetr.department ON department.id_dep = employees.id_dep;";
+    final static String INSERT_EMPLOYEE_SQL = "INSERT INTO timetr.employees "
+            + "(id_dep, lastname, firstname, middlename, position, sex, contact_info, created_date) "
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
     final static String INSERT_EMPLOYEE_TIME_SQL = "INSERT INTO timetr.timetracking "
             + "(id_empl, date, start_time, end_time) "
             + "VALUES(?, ?, ?, ?)";
@@ -118,6 +121,44 @@ public class EmployeeDao {
         }
         return true; // less changes in the database if something is wrong
     }*/
+    
+    /**
+     * Executes request into the database (table 'students') to insert the current user.
+     *
+     * @param user the current user
+     */
+    public void insertEmployee(Employee employee) {
+
+        /* link to the current database */
+        Connection conn = null;
+
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(INSERT_EMPLOYEE_SQL);
+            prepStmt.setInt(1, employee.getIdDep());
+            prepStmt.setString(2, employee.getLastName());
+            prepStmt.setString(3, employee.getFirstName());
+            prepStmt.setString(4, employee.getMiddleName());
+            prepStmt.setString(5, employee.getPosition());
+            prepStmt.setString(6, employee.getSex());
+            prepStmt.setString(7, employee.getContactInfo());
+            prepStmt.setDate(8, employee.getCreatedDate());
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Executes request into the database (table 'students') to insert the current user.
@@ -188,56 +229,6 @@ public class EmployeeDao {
      *
      * @return list of all employees from the database
      */
-    public List<Employee> getAllEmployees() {
-	
-	/* list of users to be returned */
-        List<Employee> allEmployees = new ArrayList<Employee>();
-	
-	/* link to the current database */
-        Connection conn = null;
-        try {
-	    /* gets connection to the database from Connection pool */
-            conn = datasrc.getConnection();
-	    
-	    /* creates simple SQL statement */
-            Statement stmt = conn.createStatement();
-	    
-	    /* executes the query and receives the result table */
-            ResultSet result = stmt.executeQuery(SELECT_ALL_EMPLOYEES_SQL);
-	    
-	    /* runs through all rows of the result table, creates an instance of the User,
-	     * fills in the instance's fields, and put it into result list */
-            while (result.next()) {
-                Employee employee = new Employee();
-                employee.setIdEmpl(result.getInt(1));
-                employee.setIdDep(result.getInt(2));
-                employee.setLastName(result.getString(3));
-                employee.setFirstName(result.getString(4));
-                employee.setMiddleName(result.getString(5));
-                employee.setPosition(result.getString(6));
-                employee.setSex(result.getString(7));
-                employee.setContactInfo(result.getString(8));
-                employee.setCreatedDate(result.getDate(9));
-
-                allEmployees.add(employee);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return allEmployees;
-    }
-    
-    /**
-     * Executes request into the database and returns list of all employees
-     *
-     * @return list of all employees from the database
-     */
     public List<EmployeeFullInfo> getAllEmployeesFullInfo() {
         
         /* list of items to be returned */
@@ -287,6 +278,44 @@ public class EmployeeDao {
             }
         }
         return allEmployeesWithTime;
+    }
+    
+    public List<Department> getDeps() {
+        /* list of items to be returned */
+        List<Department> deps = new ArrayList<>();
+        
+        /* link to the current database */
+        Connection conn = null;
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+            
+            /* creates simple SQL statement */
+            Statement stmt = conn.createStatement();
+            
+            /* executes the query and receives the result table */
+            ResultSet result = stmt.executeQuery(SELECT_DEPS_SQL);
+            
+            /* runs through all rows of the result table, creates an instance of the Department,
+             * fills in the instance's fields, and put it into result list */
+            while (result.next()) {
+                Department dep = new Department();
+                dep.setIdDep(result.getInt(1));
+                dep.setName(result.getString(2));
+                dep.setDescription(result.getString(3));
+
+                deps.add(dep);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return deps;
     }
     
 

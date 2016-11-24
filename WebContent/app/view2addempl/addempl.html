@@ -52,7 +52,8 @@
       </div>
       <div class="form-group col-xs-6 col-lg-4">
         <label for="depname">Department name</label> <input type="search"
-          class="form-control" name="depname" ng-model="employeeToAdd.depName">
+          class="form-control" name="depname" ng-model="employeeToAdd.depName"
+          ng-blur="newempl.getDeps()">
       </div>
       <div class="form-group col-xs-6 col-lg-6">
         <label for="depdescr">Department description</label> <input type="text"
