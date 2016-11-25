@@ -40,14 +40,14 @@ public class EmployeeDao {
     final static String UPDATE_EMPLOYEE_TIME_SQL = "UPDATE timetr.timetracking "
             + "SET date=?, start_time=?, end_time=? "
             + "WHERE id_time=?";
+    final static String DELETE_EMPLOYEE_SQL = "DELETE FROM timetr.employees "
+            + "WHERE id_empl=?;";
     final static String DELETE_EMPLOYEE_TIME_SQL = "DELETE FROM timetr.timetracking "
             + "WHERE id_time=?;";
-
-    //final static String SELECT_USER_SQL = "SELECT * FROM students WHERE login=? AND password=?";
-    //final static String SELECT_LOGIN_SQL = "SELECT * FROM students WHERE login=?";
-
-    //final static String GET_USER_FIELDS_SQL = "SELECT student_id, firstname, lastname, department"
-    //        + " FROM students WHERE login = ?";
+    final static String DELETE_ALL_EMPLOYEE_TIMES_SQL = "DELETE FROM timetr.timetracking "
+            + "WHERE id_empl=?;";
+    
+    
 
     public EmployeeDao(DataSource datasrc) {
         this.datasrc = datasrc;
@@ -110,6 +110,36 @@ public class EmployeeDao {
             prepStmt.setString(7, employee.getContactInfo());
             prepStmt.setDate(8, employee.getCreatedDate());
             prepStmt.setInt(9, employee.getIdEmpl());
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Executes request into the database (table 'students') to insert the current user.
+     *
+     * @param user the current user
+     */
+    public void deleteEmployee(int idEmpl) {
+        /* link to the current database */
+        Connection conn = null;
+        
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(DELETE_EMPLOYEE_SQL);
+            prepStmt.setInt(1, idEmpl);
 
             /* executes the query without returning anything */
             prepStmt.execute();
@@ -207,6 +237,36 @@ public class EmployeeDao {
             /* prepares SQL statement with parameters */
             PreparedStatement prepStmt = conn.prepareStatement(DELETE_EMPLOYEE_TIME_SQL);
             prepStmt.setInt(1, idTime);
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Executes request into the database (table 'students') to insert the current user.
+     *
+     * @param user the current user
+     */
+    public void deleteAllTimes(int idEmpl) {
+        /* link to the current database */
+        Connection conn = null;
+        
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(DELETE_ALL_EMPLOYEE_TIMES_SQL);
+            prepStmt.setInt(1, idEmpl);
 
             /* executes the query without returning anything */
             prepStmt.execute();

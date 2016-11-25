@@ -19,6 +19,21 @@ app.factory('NetServiceEditEmpl', ['$http', function($http) {
                 data : json
             });
         },
+        sendDeleteAllTimes: function(idEmpl) {
+            return $http({
+                method: 'POST',
+                url: 'jsonhandler',
+                params: {'command' : 'delalltimes', 'idempl' : idEmpl}
+            });
+        },
+        sendDelEmpl: function(idEmpl) {
+            return $http({
+                method: 'POST',
+                url: 'jsonhandler',
+                params: {'command' : 'delempl', 'idempl' : idEmpl}
+            });
+        }
+        
     };
 }]);
 
@@ -43,7 +58,6 @@ app.controller('EditEmplCtrl', [
     
     // handles pressed Save button
     this.provideSave = function() {
-        console.log($scope.employeeToEdit);
         // check if employee data has changes
         if (!($scope.employeeToEdit.lastName == $scope.emplInit.lastName 
                 && $scope.employeeToEdit.firstName == $scope.emplInit.firstName 
@@ -55,7 +69,7 @@ app.controller('EditEmplCtrl', [
                 && $scope.employeeToEdit.depName == $scope.emplInit.depName)) {
             
             sendEditEmpl();
-            
+        // check if time data has changes
         } else if (!($scope.employeeToEdit.timeTrackDate == $scope.emplInit.timeTrackDate 
                 && $scope.employeeToEdit.startTime == $scope.emplInit.startTime 
                 && $scope.employeeToEdit.endTime == $scope.emplInit.endTime)
@@ -75,10 +89,26 @@ app.controller('EditEmplCtrl', [
     // handles pressed Delete button
     this.provideDelete = function() {
         
-        // TODO
-        $location.path('/');
-        alert("to be developed");
-        /* send request for delete time to server */
+        var yesToDelete = confirm("Are you sure?");
+        if (yesToDelete == true) {
+            NetServiceEditEmpl.sendDeleteAllTimes($scope.employeeToEdit.idEmpl).success(function() { 
+            
+                NetServiceEditEmpl.sendDelEmpl($scope.employeeToEdit.idEmpl).success(function() { 
+                    alert('Employee has been deleted!');
+                    $location.path('/');
+                }).error(function() {
+                    alert('Employee has not been deleted!');
+                    $location.path('/'); 
+                });
+                
+                $location.path('/');
+            }).error(function() {
+                alert('Employee has not been deleted!');
+                $location.path('/'); 
+            });
+        } else {
+            $location.path('/editempl');
+        }
     };
     
     

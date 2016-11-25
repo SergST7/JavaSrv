@@ -27,6 +27,8 @@ public class CommandFactory {
         commandMap.put("addempl", new AddEmployeeCommand());
         commandMap.put("editempl", new EditEmployeeCommand());
         commandMap.put("edittime", new EditTimeCommand());
+        commandMap.put("delalltimes", new DeleteAllTimesCommand());
+        commandMap.put("delempl", new DeleteEmployeeCommand());
     }
 
     /**
