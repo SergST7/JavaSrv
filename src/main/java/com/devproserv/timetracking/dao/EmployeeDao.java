@@ -18,9 +18,6 @@ public class EmployeeDao {
     DataSource datasrc;
 
     /* Predefined SQL statements that are used for execution requests in the database, table 'employees' */
-    
-    
-    
     final static String SELECT_DEPS_SQL = "SELECT * FROM department";
     final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, "
             + "employees.lastname, employees.firstname, employees.middlename, "
@@ -33,9 +30,16 @@ public class EmployeeDao {
     final static String INSERT_EMPLOYEE_SQL = "INSERT INTO timetr.employees "
             + "(id_dep, lastname, firstname, middlename, position, sex, contact_info, created_date) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+    final static String UPDATE_EMPLOYEE_SQL = "UPDATE timetr.employees "
+            + "SET id_dep=?, lastname=?, firstname=?, middlename=?, "
+            + "position=?, sex=?, contact_info=?, created_date=? "
+            + "WHERE id_empl=?";
     final static String INSERT_EMPLOYEE_TIME_SQL = "INSERT INTO timetr.timetracking "
             + "(id_empl, date, start_time, end_time) "
             + "VALUES(?, ?, ?, ?)";
+    final static String UPDATE_EMPLOYEE_TIME_SQL = "UPDATE timetr.timetracking "
+            + "SET date=?, start_time=?, end_time=? "
+            + "WHERE id_time=?";
     final static String DELETE_EMPLOYEE_TIME_SQL = "DELETE FROM timetr.timetracking "
             + "WHERE id_time=?;";
 
@@ -49,79 +53,6 @@ public class EmployeeDao {
         this.datasrc = datasrc;
     }
 
-    /**
-     * Checks if the user with specified login and password exists in the database.
-     *
-     * @param user the current user
-     * @return {@code true} if the user exists and {@code false} if does not
-     */
-    /*public boolean isExist(User user) {
-
-	*//* link to the current database *//*
-        Connection conn = null;
-
-        try {
-	    *//* gets connection to the database from Connection pool *//*
-            conn = datasrc.getConnection();
-	    
-	    *//* prepares SQL statement with parameters *//*
-            PreparedStatement prepStmt = conn.prepareStatement(SELECT_USER_SQL);
-            prepStmt.setString(1, user.getLogin());
-            prepStmt.setString(2, user.getPassword());
-	    
-	    *//* executes the query and receives the result table *//*
-            ResultSet result = prepStmt.executeQuery();
-	    
-	    *//* returns true if result is not empty *//*
-            return result.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }*/
-
-    /**
-     * Checks if the user with specified login exists in the database.
-     *
-     * @param user the current user
-     * @return {@code true} if the user exists and {@code false} if does not
-     */
-    /*public boolean isLoginExist(User user) {
-	
-	*//* link to the current database *//*
-        Connection conn = null;
-
-        try {
-	    *//* gets connection to the database from Connection pool *//*
-            conn = datasrc.getConnection();
-	    
-	    *//* prepares SQL statement with parameters *//*
-            PreparedStatement prepStmt = conn.prepareStatement(SELECT_LOGIN_SQL);
-            prepStmt.setString(1, user.getLogin());
-	    
-	    *//* executes the query and receives the result table *//*
-            ResultSet result = prepStmt.executeQuery();
-	    
-	    *//* returns true if result is not empty *//*
-            return result.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return true; // less changes in the database if something is wrong
-    }*/
-    
     /**
      * Executes request into the database (table 'students') to insert the current user.
      *
@@ -159,6 +90,39 @@ public class EmployeeDao {
             }
         }
     }
+    
+    public void editEmployee(Employee employee) {
+
+        /* link to the current database */
+        Connection conn = null;
+
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(UPDATE_EMPLOYEE_SQL);
+            prepStmt.setInt(1, employee.getIdDep());
+            prepStmt.setString(2, employee.getLastName());
+            prepStmt.setString(3, employee.getFirstName());
+            prepStmt.setString(4, employee.getMiddleName());
+            prepStmt.setString(5, employee.getPosition());
+            prepStmt.setString(6, employee.getSex());
+            prepStmt.setString(7, employee.getContactInfo());
+            prepStmt.setDate(8, employee.getCreatedDate());
+            prepStmt.setInt(9, employee.getIdEmpl());
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Executes request into the database (table 'students') to insert the current user.
@@ -180,6 +144,39 @@ public class EmployeeDao {
             prepStmt.setDate(2, time.getDate());
             prepStmt.setTime(3, time.getStartTime());
             prepStmt.setTime(4, time.getEndTime());
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * Executes request into the database (table 'students') to insert the current user.
+     *
+     * @param user the current user
+     */
+    public void editTime(TimeTracking time) {
+
+        /* link to the current database */
+        Connection conn = null;
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(UPDATE_EMPLOYEE_TIME_SQL);
+            prepStmt.setDate(1, time.getDate());
+            prepStmt.setTime(2, time.getStartTime());
+            prepStmt.setTime(3, time.getEndTime());
+            prepStmt.setInt(4, time.getIdTime());
 
             /* executes the query without returning anything */
             prepStmt.execute();
@@ -317,44 +314,4 @@ public class EmployeeDao {
         }
         return deps;
     }
-    
-
-    /**
-     * Adds rest of the fields into the object.
-     *
-     * @param user the current user
-     */
-    /*public void getFieldsForUser(User user) {
-	
-	*//* link to the current database *//*
-        Connection connection = null;
-
-        try {
-	    *//* gets connection to the database from Connection pool *//*
-            connection = datasrc.getConnection();
-	    
-	    *//* prepares SQL statement with parameters *//*
-            PreparedStatement prepStmt = connection.prepareStatement(GET_USER_FIELDS_SQL);
-            prepStmt.setString(1, user.getLogin());
-	    
-	    *//* executes the query and receives the result table *//*
-            ResultSet result = prepStmt.executeQuery();
-	    
-	    *//* fills in the instance's fields *//*
-            while (result.next()) {
-                user.setId(result.getInt(1));
-                user.setFirstName(result.getString(2));
-                user.setLastName(result.getString(3));
-                user.setDepartment(result.getString(4));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
 }
