@@ -18,15 +18,15 @@ public class EmployeeDao {
     DataSource datasrc;
 
     /* Predefined SQL statements that are used for execution requests in the database, table 'employees' */
-    final static String SELECT_DEPS_SQL = "SELECT * FROM department";
+    final static String SELECT_DEPS_SQL = "SELECT * FROM departments";
     final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, "
             + "employees.lastname, employees.firstname, employees.middlename, "
             + "employees.position, employees.sex, employees.contact_info, employees.created_date, "
             + "timetracking.id_time, timetracking.date, timetracking.start_time, timetracking.end_time, "
-            + "department.id_dep, department.name, department.description "
+            + "departments.id_dep, departments.name, departments.description "
             + "FROM timetr.employees "
             + "LEFT JOIN timetr.timetracking ON timetracking.id_empl = employees.id_empl "
-            + "JOIN timetr.department ON department.id_dep = employees.id_dep;";
+            + "JOIN timetr.departments ON departments.id_dep = employees.id_dep;";
     final static String INSERT_EMPLOYEE_SQL = "INSERT INTO timetr.employees "
             + "(id_dep, lastname, firstname, middlename, position, sex, contact_info, created_date) "
             + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -46,7 +46,8 @@ public class EmployeeDao {
             + "WHERE id_time=?;";
     final static String DELETE_ALL_EMPLOYEE_TIMES_SQL = "DELETE FROM timetr.timetracking "
             + "WHERE id_empl=?;";
-    
+    final static String DELETE_HEAD_OF_DEP_SQL = "DELETE FROM timetr.department_heads "
+            + "WHERE id_empl=?;";
     
 
     public EmployeeDao(DataSource datasrc) {
@@ -373,5 +374,30 @@ public class EmployeeDao {
             }
         }
         return deps;
+    }
+    
+    public void deleteDepHead(int idEmpl) {
+        /* link to the current database */
+        Connection conn = null;
+        
+        try {
+            /* gets connection to the database from Connection pool */
+            conn = datasrc.getConnection();
+
+            /* prepares SQL statement with parameters */
+            PreparedStatement prepStmt = conn.prepareStatement(DELETE_HEAD_OF_DEP_SQL);
+            prepStmt.setInt(1, idEmpl);
+
+            /* executes the query without returning anything */
+            prepStmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

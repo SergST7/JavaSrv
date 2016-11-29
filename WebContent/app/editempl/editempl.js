@@ -32,6 +32,13 @@ app.factory('NetServiceEditEmpl', ['$http', function($http) {
                 url: 'jsonhandler',
                 params: {'command' : 'delempl', 'idempl' : idEmpl}
             });
+        },
+        sendDelDepHead: function(idEmpl) {
+            return $http({
+                method: 'POST',
+                url: 'jsonhandler',
+                params: {'command' : 'deldephead', 'idempl' : idEmpl}
+            });
         }
         
     };
@@ -89,27 +96,52 @@ app.controller('EditEmplCtrl', [
     // handles pressed Delete button
     this.provideDelete = function() {
         
+        // gets confirmation from user to delete
         var yesToDelete = confirm("Are you sure?");
+        
         if (yesToDelete == true) {
-            NetServiceEditEmpl.sendDeleteAllTimes($scope.employeeToEdit.idEmpl).success(function() { 
             
-                NetServiceEditEmpl.sendDelEmpl($scope.employeeToEdit.idEmpl).success(function() { 
-                    alert('Employee has been deleted!');
-                    $location.path('/');
-                }).error(function() {
-                    alert('Employee has not been deleted!');
-                    $location.path('/'); 
-                });
+            // sends request to delete dep head if employee is one
+            NetServiceEditEmpl.sendDelDepHead($scope.employeeToEdit.idEmpl).success(function() {
                 
-                $location.path('/');
-            }).error(function() {
-                alert('Employee has not been deleted!');
-                $location.path('/'); 
+                // deletes all time tracking for employee
+                sendDeleteAllTimes($scope.employeeToEdit.idEmpl);
+                
+            }).error(function () {
+                alert('Request to server failed! Try again later.');
+                $location.path('/editempl');
             });
+            
+            
+            
         } else {
             $location.path('/editempl');
         }
-    };
+    }
+    
+    
+    // sends request to clean all times for employee to be deleted
+    var sendDeleteAllTimes = function(idEmpl) {
+        NetServiceEditEmpl.sendDeleteAllTimes(idEmpl).success(function() { 
+            
+            sendDeleteEmployee(idEmpl);
+            
+        }).error(function() {
+            alert('Employee has not been deleted!');
+            $location.path('/'); 
+        });
+    }
+    
+    // sends request to delete employee
+    var sendDeleteEmployee = function(idEmpl) {
+        NetServiceEditEmpl.sendDelEmpl(idEmpl).success(function() { 
+            alert('Employee has been deleted!');
+            $location.path('/');
+        }).error(function() {
+            alert('Employee has not been deleted!');
+            $location.path('/'); 
+        });
+    }
     
     
     // creates json of edited employee and sends to server

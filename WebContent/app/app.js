@@ -7,28 +7,28 @@ app.config(['$routeProvider', function($routeProvider) {
     
     $routeProvider
     .when('/', {
-        templateUrl : 'app/view1main/main.html',
+        templateUrl : 'app/main/main.html',
         controller : 'MainCtrl',
         controllerAs: 'main'
         //resolve : var // relates to promise
     })
     .when('/addempl', {
-        templateUrl : 'app/view2addempl/addempl.html',
+        templateUrl : 'app/addempl/addempl.html',
         controller : 'AddEmplCtrl',
         controllerAs: 'newempl'
     })
     .when('/editempl', {
-        templateUrl : 'app/view3editempl/editempl.html',
+        templateUrl : 'app/editempl/editempl.html',
         controller : 'EditEmplCtrl',
         controllerAs: 'editempl'
     })
     .when('/addtime', {
-        templateUrl : 'app/view4addtime/addtime.html',
+        templateUrl : 'app/addtime/addtime.html',
         controller : 'AddTimeCtrl',
         controllerAs: 'newtime'
     })
     .when('/deltime', {
-        templateUrl : 'app/view5deltime/deltime.html',
+        templateUrl : 'app/deltime/deltime.html',
         controller : 'DelTimeCtrl',
         controllerAs: 'deltime'
     })
