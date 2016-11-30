@@ -20,7 +20,7 @@ public class CommandFactory {
     private Map<String, Command> commandMap = new HashMap<>();
 
     private CommandFactory() {
-        commandMap.put("allemployeesfull", new EmployeesFullInfoCommand());
+        commandMap.put("getemployees", new GetEmployeesCommand());
         commandMap.put("addtime", new AddTimeCommand());
         commandMap.put("deltime", new DeleteTimeCommand());
         commandMap.put("getdeps", new GetDepsCommand());

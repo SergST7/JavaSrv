@@ -19,7 +19,7 @@ public class EmployeeDao {
 
     /* Predefined SQL statements that are used for execution requests in the database, table 'employees' */
     final static String SELECT_DEPS_SQL = "SELECT * FROM departments";
-    final static String SELECT_EMPLOYEES_FULL_SQL = "SELECT employees.id_empl, "
+    final static String SELECT_EMPLOYEES_SQL = "SELECT employees.id_empl, "
             + "employees.lastname, employees.firstname, employees.middlename, "
             + "employees.position, employees.sex, employees.contact_info, employees.created_date, "
             + "timetracking.id_time, timetracking.date, timetracking.start_time, timetracking.end_time, "
@@ -287,7 +287,7 @@ public class EmployeeDao {
      *
      * @return list of all employees from the database
      */
-    public List<EmployeeFullInfo> getAllEmployeesFullInfo() {
+    public List<EmployeeFullInfo> getEmployees() {
         
         /* list of items to be returned */
         List<EmployeeFullInfo> allEmployeesWithTime = new ArrayList<>();
@@ -302,7 +302,7 @@ public class EmployeeDao {
             Statement stmt = conn.createStatement();
             
             /* executes the query and receives the result table */
-            ResultSet result = stmt.executeQuery(SELECT_EMPLOYEES_FULL_SQL);
+            ResultSet result = stmt.executeQuery(SELECT_EMPLOYEES_SQL);
             
             /* runs through all rows of the result table, creates an instance of the EmployeeFullInfo,
              * fills in the instance's fields, and put it into result list */

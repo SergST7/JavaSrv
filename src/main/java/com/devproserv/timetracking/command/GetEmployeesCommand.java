@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author vovas11
  */
-public class EmployeesFullInfoCommand implements Command {
+public class GetEmployeesCommand implements Command {
     /**
      * Defines if the name and password of the user exists in the database and if yes,
      * returns the page for the user. If not, returns the starting page
@@ -37,7 +37,7 @@ public class EmployeesFullInfoCommand implements Command {
 
         /* creates new user and sets the fields received from the user form via HTTP request */
 
-        List<EmployeeFullInfo> employees = employeeDao.getAllEmployeesFullInfo();
+        List<EmployeeFullInfo> employees = employeeDao.getEmployees();
         
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DateSerializer())

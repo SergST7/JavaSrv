@@ -7,7 +7,7 @@ app.factory('NetService', ['$http', function($http) {
             return $http({
                 method: 'GET',
                 url: 'jsonhandler',
-                params: {'command' : 'allemployeesfull'}
+                params: {'command' : 'getemployees'}
             });
         }
     };
